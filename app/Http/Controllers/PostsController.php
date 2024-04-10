@@ -12,15 +12,12 @@ class PostsController extends Controller
      */
     public function index()
     {
-        DB::transaction(function () {
-            DB::table('users')
-                ->where('id', 1)
-                ->decrement('balance', 20);
+        $posts = DB::table('posts')
+            ->whereFullText('description', 'qui')
+            ->orWhereFullText('description', 'enim')
+            ->get();
 
-            DB::table('users')
-                ->where('id', 2)
-                ->increment('balance', 20);
-        });
+        dd($posts);
     }
 
     /**
