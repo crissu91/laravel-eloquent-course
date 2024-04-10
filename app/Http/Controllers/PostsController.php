@@ -12,18 +12,15 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')
-            ->insertGetId([
-                'user_id' => 1,
-                'title' => 'title',
-                'slug' => 'title',
-                'excerpt' => 'excerpt',
-                'description' => 'description',
-                'is_published' => true,
-                'min_to_read' => 4,
-            ]);
+        DB::transaction(function () {
+            DB::table('users')
+                ->where('id', 1)
+                ->decrement('balance', 20);
 
-        dd($posts);
+            DB::table('users')
+                ->where('id', 2)
+                ->increment('balance', 20);
+        });
     }
 
     /**
