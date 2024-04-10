@@ -12,7 +12,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')->paginate(7, ['*'], 'p');
+        $posts = DB::table('posts')
+            ->orderBy('id')
+            ->cursorPaginate(10);
 
         return view('posts.index', compact('posts'));
     }
