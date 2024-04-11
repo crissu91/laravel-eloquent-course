@@ -13,9 +13,20 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes, Prunable;
 
-    protected static function booted(): void
+    // protected static function booted(): void
+    // {
+    //     static::addGlobalScope(new PublishedWithinThirtyDaysScope());
+    // }
+
+    public function scopePublished(Builder $builder)
     {
-        static::addGlobalScope(new PublishedWithinThirtyDaysScope());
+        return $builder->where('is_published', true);
+    }
+
+    public function scopeWithUserData(Builder $builder)
+    {
+        return $builder->join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.name', 'users.email');
     }
 
     // protected $table = 'users';
