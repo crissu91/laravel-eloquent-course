@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, Prunable;
 
     // protected $table = 'users';
 
@@ -20,4 +23,9 @@ class Post extends Model
     // public $timestamps = false;
 
     // protected $dateFormat = 'U';
+
+    public function prunable(): Builder
+    {
+        return static::where('deleted_at', '<=', now()->subMonth());
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,9 +13,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')
-            ->orderBy('id')
-            ->cursorPaginate(10);
+        $posts = Post::all();
 
         return view('posts.index', compact('posts'));
     }
@@ -38,9 +37,9 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        return view('posts.show', compact('post'));
     }
 
     /**
