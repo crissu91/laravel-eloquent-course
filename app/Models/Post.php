@@ -11,23 +11,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory, SoftDeletes, Prunable;
+    use HasFactory, SoftDeletes, Prunable, PostScopes;
 
     // protected static function booted(): void
     // {
     //     static::addGlobalScope(new PublishedWithinThirtyDaysScope());
     // }
-
-    public function scopePublished(Builder $builder)
-    {
-        return $builder->where('is_published', true);
-    }
-
-    public function scopeWithUserData(Builder $builder)
-    {
-        return $builder->join('users', 'posts.user_id', '=', 'users.id')
-            ->select('posts.*', 'users.name', 'users.email');
-    }
 
     // protected $table = 'users';
 
