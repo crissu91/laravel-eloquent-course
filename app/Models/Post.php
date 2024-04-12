@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
@@ -32,23 +33,28 @@ class Post extends Model
 
     // protected $dateFormat = 'U';
 
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
+    // public function tags()
+    // {
+    //     return $this->belongsToMany(Tag::class);
+    // }
 
-    public function prunable(): Builder
-    {
-        return static::where('deleted_at', '<=', now()->subMonth());
-    }
+    // public function prunable(): Builder
+    // {
+    //     return static::where('deleted_at', '<=', now()->subMonth());
+    // }
 
-    public function image(): MorphOne
-    {
-        return $this->morphOne(Image::class, 'imageable');
-    }
+    // public function image(): MorphOne
+    // {
+    //     return $this->morphOne(Image::class, 'imageable');
+    // }
 
-    public function comments(): MorphMany
+    // public function comments(): MorphMany
+    // {
+    //     return $this->morphMany(Comment::class, 'commentable');
+    // }
+
+    public function tags(): MorphToMany
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }
