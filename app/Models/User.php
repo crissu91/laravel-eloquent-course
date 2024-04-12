@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Scopes\BalanceVerifyScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -55,5 +56,17 @@ class User extends Authenticatable
     public function contact()
     {
         return $this->hasOne(Contact::class);
+    }
+
+    public function companyPhoneNumber(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            related: PhoneNumber::class,
+            through: Company::class,
+            firstKey: 'user_id',
+            secondKey: 'company_id',
+            localKey: 'id',
+            secondLocalKey: 'id'
+        );
     }
 }
