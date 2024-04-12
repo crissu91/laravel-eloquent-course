@@ -13,10 +13,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected static function booted(): void
-    {
-        static::addGlobalScope(new BalanceVerifyScope());
-    }
+    // protected static function booted(): void
+    // {
+    //     static::addGlobalScope(new BalanceVerifyScope());
+    // }
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +50,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function contact()
+    {
+        return $this->hasOne(Contact::class);
     }
 }

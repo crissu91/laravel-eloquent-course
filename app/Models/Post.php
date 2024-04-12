@@ -35,3 +35,29 @@ class Post extends Model
         return static::where('deleted_at', '<=', now()->subMonth());
     }
 }
+
+// {
+//     {'title': '...', id: 'asdasd' },
+// }
+
+// {
+//     {'asdasd': { title: '...', id: 'asdasd' } },
+// }
+
+// {
+//     {'asdasd': '...' },
+// }
+
+Post::query()
+    // ->where(...
+    ->select(['title', 'id'])
+    ->get()
+    ->keyBy('id')
+    ->map->title;
+
+Post::query()
+    ->get()
+    ->pluck('title', 'id');
+
+Post::query()
+    ->pluck('title', 'id');
