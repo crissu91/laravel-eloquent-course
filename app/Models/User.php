@@ -8,6 +8,7 @@ use App\Models\Scopes\BalanceVerifyScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -79,5 +80,10 @@ class User extends Authenticatable
     public function oldestJob(): HasOne
     {
         return $this->hasOne(Job::class)->oldestOfMany();
+    }
+
+    public function image(): MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }
