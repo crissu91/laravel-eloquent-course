@@ -30,34 +30,13 @@ class Post extends Model
 
     // protected $dateFormat = 'U';
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function prunable(): Builder
     {
         return static::where('deleted_at', '<=', now()->subMonth());
     }
 }
-
-// {
-//     {'title': '...', id: 'asdasd' },
-// }
-
-// {
-//     {'asdasd': { title: '...', id: 'asdasd' } },
-// }
-
-// {
-//     {'asdasd': '...' },
-// }
-
-Post::query()
-    // ->where(...
-    ->select(['title', 'id'])
-    ->get()
-    ->keyBy('id')
-    ->map->title;
-
-Post::query()
-    ->get()
-    ->pluck('title', 'id');
-
-Post::query()
-    ->pluck('title', 'id');
