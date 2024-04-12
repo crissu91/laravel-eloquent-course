@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Scopes\BalanceVerifyScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -68,5 +69,15 @@ class User extends Authenticatable
             localKey: 'id',
             secondLocalKey: 'id'
         );
+    }
+
+    public function latestJob(): HasOne
+    {
+        return $this->hasOne(Job::class)->latestOfMany();
+    }
+
+    public function oldestJob(): HasOne
+    {
+        return $this->hasOne(Job::class)->oldestOfMany();
     }
 }
