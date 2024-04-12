@@ -86,4 +86,14 @@ class User extends Authenticatable
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function latestImage(): MorphOne
+    {
+        return $this->morphOne(related: Image::class, name: 'imageable')->latest0fMany();
+    }
+
+    public function oldestImage(): MorphOne
+    {
+        return $this->morphOne(related: Image::class, name: 'imageable')->oldest0fMany();
+    }
 }
